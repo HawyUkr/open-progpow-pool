@@ -6,13 +6,9 @@
 
 ### Features
 
-**This pool is no longer supported, expect only casual fixes.**
-
-**Parity client is MANDATORY. Geth is no longer supported.**
-
 * Support for HTTP and Stratum mining
 * Detailed block stats with luck percentage and full reward
-* Parity nodes rpc failover built in
+* Geth/Parity nodes rpc failover built in
 * Modern beautiful Ember.js frontend
 * Separate stats for workers: can highlight timed-out workers so miners can perform maintenance of rigs
 * JSON-API for stats
@@ -27,7 +23,7 @@
 Dependencies:
 
   * go >= 1.9
-  * parity (will not work with geth)
+  * parity & geth
   * redis-server >= 2.8.0
   * nodejs >= 4 LTS
   * nginx
@@ -38,7 +34,6 @@ First install  [go-ethereum](https://github.com/ethereum/go-ethereum/wiki/Instal
 
 Clone & compile:
 
-    git config --global http.https://gopkg.in.followRedirects true
     git clone https://github.com/sammy007/open-ethereum-pool.git
     cd open-ethereum-pool
     make
