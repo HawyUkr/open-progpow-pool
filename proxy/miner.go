@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gangnamtestnet/ethash"
+	"github.com/HawyUkr/ethash"
 	"github.com/ethereum/go-ethereum/common"
 )
 
@@ -14,7 +14,7 @@ var hasher = ethash.New()
 
 func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, params []string) (bool, bool) {
 	nonceHex := params[0]
-	hashNoNonce := params[1]
+	hashNoNonce := strings.Replace(params[1], "0x", "", -1)
 	mixDigest := params[2]
 	nonce, _ := strconv.ParseUint(strings.Replace(nonceHex, "0x", "", -1), 16, 64)
 	shareDiff := s.config.Proxy.Difficulty
@@ -22,6 +22,7 @@ func (s *ProxyServer) processShare(login, id, ip string, t *BlockTemplate, param
 	h, ok := t.headers[hashNoNonce]
 	if !ok {
 		log.Printf("Stale share from %v@%v", login, ip)
+                log.Printf("Cant get %s", hashNoNonce)
 		return false, false
 	}
 

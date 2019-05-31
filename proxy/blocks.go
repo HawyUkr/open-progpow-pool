@@ -94,6 +94,7 @@ func (s *ProxyServer) fetchBlockTemplate() {
 		diff:   diff,
 		height: height,
 	}
+        log.Printf("add headers %s to template %s %s", reply[0], diff, height)
 	if t != nil {
 		for k, v := range t.headers {
 			if v.height > height-maxBacklog {

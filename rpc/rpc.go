@@ -17,6 +17,8 @@ import (
 	"github.com/sammy007/open-ethereum-pool/util"
 )
 
+var NotImplementedMethod = errors.New("This method is not implemented yet")
+
 type RPCClient struct {
 	sync.RWMutex
 	Url         string
@@ -99,6 +101,7 @@ func (r *RPCClient) GetWork() ([]string, error) {
 }
 
 func (r *RPCClient) GetLatestBlock() (*GetBlockReplyPart, error) {
+        return nil, NotImplementedMethod
 	rpcResp, err := r.doPost(r.Url, "eth_getBlockByNumber", []interface{}{"latest", false})
 	if err != nil {
 		return nil, err
@@ -112,6 +115,7 @@ func (r *RPCClient) GetLatestBlock() (*GetBlockReplyPart, error) {
 }
 
 func (r *RPCClient) GetPendingBlock() (*GetBlockReplyPart, error) {
+        return nil, NotImplementedMethod
 	rpcResp, err := r.doPost(r.Url, "eth_getBlockByNumber", []interface{}{"pending", false})
 	if err != nil {
 		return nil, err
@@ -125,21 +129,25 @@ func (r *RPCClient) GetPendingBlock() (*GetBlockReplyPart, error) {
 }
 
 func (r *RPCClient) GetBlockByHeight(height int64) (*GetBlockReply, error) {
+        return nil, NotImplementedMethod
 	params := []interface{}{fmt.Sprintf("0x%x", height), true}
 	return r.getBlockBy("eth_getBlockByNumber", params)
 }
 
 func (r *RPCClient) GetBlockByHash(hash string) (*GetBlockReply, error) {
+        return nil, NotImplementedMethod
 	params := []interface{}{hash, true}
 	return r.getBlockBy("eth_getBlockByHash", params)
 }
 
 func (r *RPCClient) GetUncleByBlockNumberAndIndex(height int64, index int) (*GetBlockReply, error) {
+        return nil, NotImplementedMethod
 	params := []interface{}{fmt.Sprintf("0x%x", height), fmt.Sprintf("0x%x", index)}
 	return r.getBlockBy("eth_getUncleByBlockNumberAndIndex", params)
 }
 
 func (r *RPCClient) getBlockBy(method string, params []interface{}) (*GetBlockReply, error) {
+        return nil, NotImplementedMethod
 	rpcResp, err := r.doPost(r.Url, method, params)
 	if err != nil {
 		return nil, err
@@ -153,6 +161,7 @@ func (r *RPCClient) getBlockBy(method string, params []interface{}) (*GetBlockRe
 }
 
 func (r *RPCClient) GetTxReceipt(hash string) (*TxReceipt, error) {
+        return nil, NotImplementedMethod
 	rpcResp, err := r.doPost(r.Url, "eth_getTransactionReceipt", []string{hash})
 	if err != nil {
 		return nil, err
@@ -176,6 +185,7 @@ func (r *RPCClient) SubmitBlock(params []string) (bool, error) {
 }
 
 func (r *RPCClient) GetBalance(address string) (*big.Int, error) {
+        return nil, NotImplementedMethod
 	rpcResp, err := r.doPost(r.Url, "eth_getBalance", []string{address, "latest"})
 	if err != nil {
 		return nil, err
@@ -189,6 +199,7 @@ func (r *RPCClient) GetBalance(address string) (*big.Int, error) {
 }
 
 func (r *RPCClient) Sign(from string, s string) (string, error) {
+        return "", NotImplementedMethod
 	hash := sha256.Sum256([]byte(s))
 	rpcResp, err := r.doPost(r.Url, "eth_sign", []string{from, common.ToHex(hash[:])})
 	var reply string
@@ -219,6 +230,7 @@ func (r *RPCClient) GetPeerCount() (int64, error) {
 }
 
 func (r *RPCClient) SendTransaction(from, to, gas, gasPrice, value string, autoGas bool) (string, error) {
+        return "", NotImplementedMethod
 	params := map[string]string{
 		"from":  from,
 		"to":    to,
