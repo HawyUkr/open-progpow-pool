@@ -13,10 +13,10 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"github.com/sammy007/open-ethereum-pool/policy"
-	"github.com/sammy007/open-ethereum-pool/rpc"
-	"github.com/sammy007/open-ethereum-pool/storage"
-	"github.com/sammy007/open-ethereum-pool/util"
+	"github.com/HawyUkr/open-progpow-pool/policy"
+	"github.com/HawyUkr/open-progpow-pool/rpc"
+	"github.com/HawyUkr/open-progpow-pool/storage"
+	"github.com/HawyUkr/open-progpow-pool/util"
 )
 
 type ProxyServer struct {
@@ -57,8 +57,8 @@ func NewProxy(cfg *Config, backend *storage.RedisClient) *ProxyServer {
 
 	proxy.upstreams = make([]*rpc.RPCClient, len(cfg.Upstream))
 	for i, v := range cfg.Upstream {
-		proxy.upstreams[i] = rpc.NewRPCClient(v.Name, v.Url, v.Timeout)
-		log.Printf("Upstream: %s => %s", v.Name, v.Url)
+		proxy.upstreams[i] = rpc.NewRPCClient(v.Name, v.Url, v.Timeout, v.Username, v.Password)
+		log.Printf("Upstream: %s => %s (basicauth username)", v.Name, v.Url, v.Username)
 	}
 	log.Printf("Default upstream: %s => %s", proxy.rpc().Name, proxy.rpc().Url)
 

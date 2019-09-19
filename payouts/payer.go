@@ -10,9 +10,9 @@ import (
 
 	"github.com/ethereum/go-ethereum/common/hexutil"
 
-	"github.com/sammy007/open-ethereum-pool/rpc"
-	"github.com/sammy007/open-ethereum-pool/storage"
-	"github.com/sammy007/open-ethereum-pool/util"
+	"github.com/HawyUkr/open-progpow-pool/rpc"
+	"github.com/HawyUkr/open-progpow-pool/storage"
+	"github.com/HawyUkr/open-progpow-pool/util"
 )
 
 const txCheckInterval = 5 * time.Second
@@ -52,7 +52,7 @@ type PayoutsProcessor struct {
 
 func NewPayoutsProcessor(cfg *PayoutsConfig, backend *storage.RedisClient) *PayoutsProcessor {
 	u := &PayoutsProcessor{config: cfg, backend: backend}
-	u.rpc = rpc.NewRPCClient("PayoutsProcessor", cfg.Daemon, cfg.Timeout)
+	u.rpc = rpc.NewRPCClient("PayoutsProcessor", cfg.Daemon, cfg.Timeout, "", "")
 	return u
 }
 

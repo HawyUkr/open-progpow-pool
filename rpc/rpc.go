@@ -14,7 +14,7 @@ import (
 
 	"github.com/ethereum/go-ethereum/common"
 
-	"github.com/sammy007/open-ethereum-pool/util"
+	"github.com/HawyUkr/open-progpow-pool/util"
 )
 
 var NotImplementedMethod = errors.New("This method is not implemented yet")
@@ -23,6 +23,8 @@ type RPCClient struct {
 	sync.RWMutex
 	Url         string
 	Name        string
+        Username    string
+        Password    string
 	sick        bool
 	sickRate    int
 	successRate int
@@ -81,8 +83,8 @@ type JSONRpcResp struct {
 	Error  map[string]interface{} `json:"error"`
 }
 
-func NewRPCClient(name, url, timeout string) *RPCClient {
-	rpcClient := &RPCClient{Name: name, Url: url}
+func NewRPCClient(name, url, timeout, username, password string) *RPCClient {
+	rpcClient := &RPCClient{Name: name, Url: url, Username: username, Password: password}
 	timeoutIntv := util.MustParseDuration(timeout)
 	rpcClient.client = &http.Client{
 		Timeout: timeoutIntv,
@@ -267,6 +269,10 @@ func (r *RPCClient) doPost(url string, method string, params interface{}) (*JSON
 	req.Header.Set("Content-Length", (string)(len(data)))
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
+
+        if r.Username != "" {
+          req.SetBasicAuth(r.Username, r.Password)
+        }
 
 	resp, err := r.client.Do(req)
 	if err != nil {
